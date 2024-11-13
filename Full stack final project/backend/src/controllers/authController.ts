@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import User from "../models/userModel";
 import Organization from "../models/organizationModel";
 import bcrypt from 'bcrypt';
@@ -26,11 +26,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             res.status(400).json({ error: "Organization not found" });
             return;
         }
-
-        // if(organization.split(" ")[0] === "IDF" && (area !== "West bank" || area !== "South" || area !== "Center" || area !== "North")) {
-        //     res.status(400).json({ error: "Invalid area" });
-        //     return
-        // }
 
         const budget = userOrganization.budget;
         
@@ -95,5 +90,33 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         console.error("Error logging in:", error);
         res.status(500).json({ error: "Failed to login" });
+    }
+};
+
+export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
+    try {
+        const token = req.cookies.auth_token;
+        if (!token) {
+            res.status(401).json({ error: "No token provided" });
+            return
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "") as { id: string, organization: string };
+
+        if (!decoded) {
+            res.status(401).json({ error: "Invalid token" });
+            return
+        }
+
+        if (!decoded.id || !decoded.organization) {
+            res.status(401).json({ error: "Invalid token" });
+            return
+        }
+
+        next(); 
+
+    } catch (error) {
+        res.status(401).json({ error: "Invalid token" });
+        return
     }
 };

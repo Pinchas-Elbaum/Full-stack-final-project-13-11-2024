@@ -3,12 +3,12 @@ import mongoose, { Document } from "mongoose";
 export interface IUser extends Document {
    name: string;
    password: string;
-   organization:  string;
+   organization: string;
    area: string;
    budget: number
 }
 
-export interface IUserModel extends mongoose.Model<IUser> {}
+export interface IUserModel extends mongoose.Model<IUser> { }
 
 const userSchema = new mongoose.Schema({
    name: { type: String, required: true, unique: true },
@@ -18,4 +18,4 @@ const userSchema = new mongoose.Schema({
    budget: { type: Number },
 });
 
-export default mongoose.model<  IUser, IUserModel>("User", userSchema);
+export default mongoose.model<IUser, IUserModel>("User", userSchema);

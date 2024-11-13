@@ -8,15 +8,15 @@ export interface IMissile extends Document {
    price: number;
 }
 
-export interface IMissileModel extends mongoose.Model<IMissile> {}
+export interface IMissileModel extends mongoose.Model<IMissile> { }
 
 const missileSchema = new mongoose.Schema({
    name: { type: String },
-   description: { type: String},
+   description: { type: String },
    speed: { type: Number },
    intercepts: { type: [String], required: true },
    price: { type: Number },
- 
+
 });
 
-export default mongoose.model<  IMissile, IMissileModel>("Missile", missileSchema);
+export default mongoose.model<IMissile, IMissileModel>("Missile", missileSchema);

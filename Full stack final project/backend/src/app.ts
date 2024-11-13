@@ -22,13 +22,12 @@ app.use(cors(
 app.use(express.json());
 app.use(cookieParser());
 
-connectToDatabase();
-
-//  initialDataToDB();
 app.use('/auth', Routes);
 app.use('/api', dataRoutes);
 
 
+connectToDatabase();
+//  initialDataToDB();
 
 const PORT = process.env.PORT || 3000;
 

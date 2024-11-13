@@ -6,12 +6,12 @@ export interface IOrganization extends Document {
     budget: number;
 }
 
-export interface IOrganizationModel extends mongoose.Model<IOrganization> {}
+export interface IOrganizationModel extends mongoose.Model<IOrganization> { }
 
 const organizationSchema = new mongoose.Schema({
-   name: { type: String, required: true },
-   resources: { type: [{ name: String, amount: Number }], required: true },
-   budget: { type: Number, required: true },
+    name: { type: String, required: true },
+    resources: { type: [{ name: String, amount: Number }], required: true },
+    budget: { type: Number, required: true },
 });
 
-export default mongoose.model<  IOrganization, IOrganizationModel>("Organization", organizationSchema);
+export default mongoose.model<IOrganization, IOrganizationModel>("Organization", organizationSchema);
