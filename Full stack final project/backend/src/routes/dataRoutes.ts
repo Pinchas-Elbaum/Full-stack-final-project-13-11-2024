@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { getAllMissiles, getOrganizationMissiles } from "../controllers/dataController";
+import { getAllMissiles, getOrganizationMissiles,  updateOrganizationMissiles} from "../controllers/dataController";
 const authRoutes = Router();
 
 authRoutes.get("/missiles", getAllMissiles);
 authRoutes.get("/organizationMissiles/:id", getOrganizationMissiles);
+authRoutes.put("/organizationMissiles/:id", updateOrganizationMissiles);
 
 
 
