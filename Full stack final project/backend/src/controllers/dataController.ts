@@ -1,5 +1,6 @@
 import Missille from "../models/missillesModel";
 import Organization from "../models/organizationModel";
+import User from "../models/userModel";
 import { Request, Response } from "express";
 
 export const getAllMissiles = async (req: Request, res: Response): Promise<void> => {
@@ -78,3 +79,36 @@ export const updateOrganizationMissiles = async (req: Request, res: Response): P
         return
     }
 };  
+
+export const updateUserBudget = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const { budget } = req.body;
+
+        if (!id || !budget) {
+            res.status(400).json({ error: "Missing required fields" });
+            return
+        }
+
+        if (budget < 0) {
+            res.status(400).json({ error: "Budget cannot be negative" });
+            return
+        }
+
+        const user = await User.findById({ _id: id });
+
+        if (!user) {
+            res.status(404).json({ error: "User not found" });
+            return
+        }
+
+        user.budget = budget;
+        await user.save();
+
+        res.status(200).json(user);
+        return
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update user budget" });
+        return
+    }
+};
