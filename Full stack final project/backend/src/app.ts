@@ -1,9 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { connectToDatabase } from './tools/database';
-import Routes from './routes/Routes';
+import Routes from './routes/authRoutes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { initialDataToDB } from './data/initialDataToDB';
 
 
 dotenv.config();
@@ -22,7 +23,9 @@ app.use(cookieParser());
 
 connectToDatabase();
 
-app.use('/', Routes);
+ initialDataToDB();
+app.use('/auth', Routes);
+
 
 const PORT = process.env.PORT || 3000;
 
