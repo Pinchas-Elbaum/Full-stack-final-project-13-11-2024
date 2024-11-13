@@ -27,13 +27,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        // if(organization.split(" ")[0] === "IDF" && (area !== "West bank" || area !== "South" || area !== "Center" || area !== "North")) {
+        //     res.status(400).json({ error: "Invalid area" });
+        //     return
+        // }
+
         const budget = userOrganization.budget;
-        if (budget < 0) {
-            res.status(400).json({ error: "Budget cannot be negative" });
-            return;
-        }
-
-
+        
         const user = new User({
             name,
             password: hashedPassword,

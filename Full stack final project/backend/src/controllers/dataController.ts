@@ -24,7 +24,7 @@ export const getOrganizationMissiles = async (req: Request, res: Response): Prom
             res.status(404).json({ error: "Organization not found" });
             return
         }
-        const missiles = organization.resources; 
+        const missiles = organization.resources;
 
         res.status(200).json(missiles);
         return
@@ -38,7 +38,7 @@ export const updateOrganizationMissiles = async (req: Request, res: Response): P
     try {
 
         const { id } = req.params;
-        const { name , amount } = req.body;
+        const { name, amount } = req.body;
 
         if (!id || !name || !amount) {
             res.status(400).json({ error: "Missing required fields" });
@@ -52,7 +52,7 @@ export const updateOrganizationMissiles = async (req: Request, res: Response): P
             return
         }
 
-        if(! await Missille.findOne({ name })) {
+        if (! await Missille.findOne({ name })) {
             res.status(404).json({ error: "Missile not found" });
             return
         }
@@ -73,12 +73,12 @@ export const updateOrganizationMissiles = async (req: Request, res: Response): P
 
         res.status(200).json(organization);
         return
-        
+
     } catch (error) {
         res.status(500).json({ error: "Failed to update organization missiles" });
         return
     }
-};  
+};
 
 export const updateUserBudget = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -112,3 +112,65 @@ export const updateUserBudget = async (req: Request, res: Response): Promise<voi
         return
     }
 };
+
+export const buyMissile = async (req: Request, res: Response): Promise<void> => {
+
+    try {
+        const { id } = req.params;
+        const { name, amount } = req.body;
+
+        if (!id || !name || !amount) {
+            res.status(400).json({ error: "Missing required fields" });
+            return
+        }
+
+        const user = await User.findById({ _id: id });
+
+        if (!user) {
+            res.status(404).json({ error: "User not found" });
+            return
+        }
+
+        const missile = await Missille.findOne({ name });
+
+        if (!missile) {
+            res.status(404).json({ error: "Missile not found" });
+            return
+        }
+
+        if (user.budget < missile.price * amount) {
+            res.status(400).json({ error: "Not enough budget" });
+            return
+        }
+
+        const organization = await Organization.findOne({ name: user.organization });
+
+        if (!organization) {
+            res.status(404).json({ error: "Organization not found" });
+            return
+        }
+
+        const resources = organization.resources;
+
+        const isMissileExistsAtOraganization = resources.find(resource => resource.name === name)
+
+        if (isMissileExistsAtOraganization) {
+            resources.map(resource => resource.name === name ? resource.amount += Number(amount) : resource);
+        }
+        else {
+            resources.push({ name, amount });
+        }
+
+        organization.resources = resources;
+        await organization.save();
+
+        user.budget -= missile.price * amount;
+        await user.save();
+
+        res.status(200).json(user);
+        return
+    } catch (error) {
+        res.status(500).json({ error: "Failed to buy missile" });
+        return
+    }
+}
