@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectToDatabase } from './tools/database';
 import Routes from './routes/authRoutes';
+import dataRoutes from './routes/dataRoutes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { initialDataToDB } from './data/initialDataToDB';
@@ -23,8 +24,10 @@ app.use(cookieParser());
 
 connectToDatabase();
 
- initialDataToDB();
+//  initialDataToDB();
 app.use('/auth', Routes);
+app.use('/api', dataRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;
