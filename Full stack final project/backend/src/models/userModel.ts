@@ -5,7 +5,9 @@ export interface IUser extends Document {
    password: string;
    organization: string;
    area: string;
-   budget: number
+   budget: number;
+   organizationId: string;
+   
 }
 
 export interface IUserModel extends mongoose.Model<IUser> { }
@@ -16,6 +18,7 @@ const userSchema = new mongoose.Schema({
    organization: { type: String, required: true },
    area: { type: String },
    budget: { type: Number },
+   organizationId: { type: String },
 });
 
 export default mongoose.model<IUser, IUserModel>("User", userSchema);

@@ -28,6 +28,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             res.status(400).json({ error: "Organization not found" });
             return;
         }
+        const organizationId = userOrganization._id;
 
         const budget = userOrganization.budget;
 
@@ -36,7 +37,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             password: hashedPassword,
             organization,
             area,
-            budget
+            budget,
+            organizationId
 
         });
 
