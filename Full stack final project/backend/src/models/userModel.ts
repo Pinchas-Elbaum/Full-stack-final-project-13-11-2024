@@ -7,7 +7,6 @@ export interface IUser extends Document {
    area: string;
    budget: number;
    organizationId: string;
-   
 }
 
 export interface IUserModel extends mongoose.Model<IUser> { }

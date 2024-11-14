@@ -16,6 +16,8 @@ export const OrganizationContext = createContext<ContextProps>({} as ContextProp
 
 const OrganizationProvider = ({ children }: Props) => {
     const [organization, setorganization] = useState<IOrganization>({} as IOrganization);
+
+    
     
     return (
 
