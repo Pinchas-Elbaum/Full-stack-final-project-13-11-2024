@@ -44,9 +44,8 @@ export const buyMissile = async (req: Request, res: Response): Promise<void> => 
             res.status(400).json({ error: "Missing required fields" });
             return
         }
-
         const user = await User.findById({ _id: id }); // בדוק האם קיים משתמש בשם זה  
-
+        
         if (!user) {
             res.status(404).json({ error: "User not found" }); // אם לא קיים החזר שגיאה
             return

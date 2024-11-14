@@ -31,14 +31,13 @@ const Login = () => {
 
         axios.post("http://localhost:3300/auth/login", userLogin)
             .then((res) => {
-                setuser({ name: res.data.name, organization: res.data.organization, organizationId: res.data.organizationId, bugdet: res.data.budget });
-
+                setuser({ name: res.data.name, organization: res.data.organization, organizationId: res.data.organizationId, bugdet: res.data.budget ,id: res.data.id });
                 showSnackbar('User logged in successfully!!');
                 setTimeout(() => {
                     hideSnackbar();
                     navigate('/currentWeaponQuantity');
                 }, 2000);            })
-                
+
             .catch((err) => {
                 console.log(err);
                 showSnackbar('Error!!');

@@ -7,7 +7,7 @@ const authRoutes = Router();
 
 authRoutes.get("/missiles", getAllMissiles);
 authRoutes.get("/organizationMissiles/:id",  getOrganizationMissiles);
-authRoutes.put("/buyMissile/:id",authenticate, buyMissile);
+authRoutes.put("/buyMissile/:id", buyMissile);
 
 
 export default authRoutes;

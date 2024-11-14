@@ -1,4 +1,5 @@
 export interface IUser {
+  id?: string;
   name: string;
   password?: string;
   organization: string;
@@ -14,4 +15,10 @@ export interface IUserLogin {
 
 export interface IOrganization {
   resources: { name: string; amount: number }[];
+}
+
+export interface IMissiles {
+  name: string;
+  intercepts : Array<string>;
+  price: number;
 }

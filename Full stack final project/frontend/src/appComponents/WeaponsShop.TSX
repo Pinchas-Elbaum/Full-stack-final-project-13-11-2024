@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import axios from 'axios'
+import { useEffect } from 'react'
 
 const WeaponsShop = () => {
-    const WeaponsList = []
+    
     useEffect(() => {
-
-        
+      axios.get('http://localhost:3300/api/missiles').then(res => console.log(res.data));
+      console.log('hello');
     }, [])
+
   return (
     <div>
       

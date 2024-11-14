@@ -1,11 +1,13 @@
 import  { useContext, useState } from 'react'
 import { UserContext } from '../providers/UserProvider';
 import { OrganizationContext } from '../providers/OrganizationProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CurrentWeaponQuantity = () => {
     const {user} = useContext(UserContext);
     const {organization} = useContext(OrganizationContext);
     const [resorces] = useState<{name: string, amount: number}[]>(organization.resources||[]);
+    const navigate = useNavigate(); 
 
   return (
 
@@ -18,6 +20,7 @@ const CurrentWeaponQuantity = () => {
             <ul>
                 {resorces.map((resource) => (<li key={resource.name}>{resource.name} * {resource.amount}</li>))}
             </ul>
+            <button onClick={() => { navigate('/Shop') }}>GO TO WEAPON SHOP</button>
         </div>
     </div>
     
