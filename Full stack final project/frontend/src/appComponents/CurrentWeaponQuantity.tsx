@@ -1,9 +1,11 @@
-import  { useContext } from 'react'
+import  { useContext, useState } from 'react'
 import { UserContext } from '../providers/UserProvider';
+import { OrganizationContext } from '../providers/OrganizationProvider';
 
 const CurrentWeaponQuantity = () => {
     const {user} = useContext(UserContext);
-    const resorces = ["Weapon 1", "Weapon 2", "Weapon 3", "Weapon 4", "Weapon 5"];
+    const {organization} = useContext(OrganizationContext);
+    const [resorces] = useState<{name: string, amount: number}[]>(organization.resources||[]);
 
   return (
 
@@ -12,9 +14,9 @@ const CurrentWeaponQuantity = () => {
         <h3>Buget: {user.bugdet}</h3>
 
         <div>
-            <h3>Current Weapon Quantity</h3>
+            <h3>Avilable Ammo</h3>
             <ul>
-                {resorces.map((resource) => (<li key={resource}>{resource}</li>))}
+                {resorces.map((resource) => (<li key={resource.name}>{resource.name} * {resource.amount}</li>))}
             </ul>
         </div>
     </div>

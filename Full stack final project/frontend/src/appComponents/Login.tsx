@@ -9,13 +9,14 @@ import { IUserLogin } from '../types/Types';
 
 const Login = () => {
 
-    const {user, setuser } = useContext(UserContext);
+    const { user, setuser } = useContext(UserContext);
     const { message, isOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext)!
 
     const nameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
     const navigate = useNavigate();
+
 
     const submitHeandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,20 +31,25 @@ const Login = () => {
 
         axios.post("http://localhost:3300/auth/login", userLogin)
             .then((res) => {
-                setuser({name :res.data.name , organization: res.data.organization, organizationId: res.data.organizationId, bugdet: res.data.budget});
+                setuser({ name: res.data.name, organization: res.data.organization, organizationId: res.data.organizationId, bugdet: res.data.budget });
+
                 showSnackbar('User logged in successfully!!');
                 setTimeout(() => {
                     hideSnackbar();
                     navigate('/currentWeaponQuantity');
-                }, 2000);
-            })
+                }, 2000);            })
+                
             .catch((err) => {
                 console.log(err);
                 showSnackbar('Error!!');
                 setTimeout(() => {
                     hideSnackbar();
                 }, 2000);
-            });
+            }
+           
+        );
+
+        
     }
 
     return (

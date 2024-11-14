@@ -1,5 +1,7 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { IOrganization } from '../types/Types';
+import { UserContext } from './UserProvider';
+import axios from 'axios';
 
 
 interface Props {
@@ -16,6 +18,13 @@ export const OrganizationContext = createContext<ContextProps>({} as ContextProp
 
 const OrganizationProvider = ({ children }: Props) => {
     const [organization, setorganization] = useState<IOrganization>({} as IOrganization);
+    const {user} = useContext(UserContext);
+
+    useEffect(() => {
+        if(user.organizationId){
+        axios.get(`http://localhost:3300/api/organizationMissiles/${user.organizationId}`).then(res => setorganization({resources: res.data}));
+    }}, [user]);
+            
 
     
     
