@@ -82,7 +82,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         res.cookie("auth_token", token, {
             maxAge: 1000 * 60 * 60 * 5,
-            sameSite: 'strict'
+            httpOnly: true
         });
 
         res.json({ name: user.name, organization: user.organization , budget: user.budget, organizationId: user.organizationId, id: user._id,  massg: " logged in successfully"});
@@ -98,12 +98,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
     try {
         const token = req.cookies.auth_token;
+        console.log(token);
         if (!token) {
             res.status(401).json({ error: "No token provided" });
             return
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET || "") as { id: string, organization: string };
+        
 
         if (!decoded) {
             res.status(401).json({ error: "Invalid token" });

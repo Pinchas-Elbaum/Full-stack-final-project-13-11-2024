@@ -4,6 +4,7 @@ import { OrganizationContext } from '../providers/OrganizationProvider';
 import { useNavigate } from 'react-router-dom';
 
 const CurrentWeaponQuantity = () => {
+  const navigat = useNavigate();
     const {user} = useContext(UserContext);
     const {organization} = useContext(OrganizationContext);
     const [resorces] = useState<{name: string, amount: number}[]>(organization.resources||[]);
@@ -22,6 +23,8 @@ const CurrentWeaponQuantity = () => {
             </ul>
             <button onClick={() => { navigate('/Shop') }}>GO TO WEAPON SHOP</button>
         </div>
+        <button onClick={() => { navigat('/') }}>Home</button>
+
     </div>
     
   )

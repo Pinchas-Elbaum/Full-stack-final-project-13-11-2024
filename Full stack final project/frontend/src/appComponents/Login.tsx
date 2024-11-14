@@ -29,7 +29,7 @@ const Login = () => {
         nameRef.current!.value = "";
         passwordRef.current!.value = "";
 
-        axios.post("http://localhost:3300/auth/login", userLogin)
+        axios.post("http://localhost:3300/auth/login", userLogin, { withCredentials: true })
             .then((res) => {
                 setuser({ name: res.data.name, organization: res.data.organization, organizationId: res.data.organizationId, bugdet: res.data.budget ,id: res.data.id });
                 showSnackbar('User logged in successfully!!');
@@ -68,6 +68,8 @@ const Login = () => {
                     {message}
                 </div>
             )}
+            <button onClick={() => { navigate('/') }}>Home</button>
+
         </div>
     )
 }

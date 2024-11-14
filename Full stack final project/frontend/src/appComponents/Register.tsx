@@ -39,7 +39,7 @@ const Register = () => {
       showSnackbar('User added successfully!!');
       setTimeout(() => {
         hideSnackbar();
-        navigat('/register');
+        navigat('/');
       }, 2000);
     }
 
@@ -95,7 +95,7 @@ const Register = () => {
           {message}
         </div>
       )}
-
+<button onClick={() => { navigat('/') }}>Home</button>
     </div>
   )
 }
