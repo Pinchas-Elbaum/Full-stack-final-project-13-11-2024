@@ -22,18 +22,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        // if (organization === "IDF") {
-        //     if (area !== "North" && area !== "South" && area !== "Center" && area !== "West Bank") {
-        //         res.status(400).json({ error: "Invalid area" });
-        //         return;
-        //     }
-        // }
-
-        // if (organization !== "IDF" && area !== "") {
-        //     res.status(400).json({ error: "area should be empty" });
-        //     return;
-        // }
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const userOrganization = await Organization.findOne({ name: organization });

@@ -39,25 +39,25 @@ export const getOrganizationMissiles = async (req: Request, res: Response): Prom
 export const buyMissile = async (req: Request, res: Response): Promise<void> => {
 
     try {
-        const { id } = req.params;
-        const { name, amount } = req.body;
+        const { id } = req.params;// מקבל איידי של יוזר
+        const { name, amount } = req.body; // מקבל שם וכמות של נשק
 
-        if (!id || !name || !amount) {
+        if (!id || !name || !amount) { // אם אין אחד מהפרמטרים  - החזר שגיאה
             res.status(400).json({ error: "Missing required fields" });
             return
         }
 
-        const user = await User.findById({ _id: id });
+        const user = await User.findById({ _id: id }); // בדוק האם קיים משתמש בשם זה  
 
         if (!user) {
-            res.status(404).json({ error: "User not found" });
+            res.status(404).json({ error: "User not found" }); // אם לא קיים החזר שגיאה
             return
         }
 
-        const missile = await Missille.findOne({ name });
+        const missile = await Missille.findOne({ name }); // חפש נשק לפי השם שנשלח בגוף הבקשה
 
         if (!missile) {
-            res.status(404).json({ error: "Missile not found" });
+            res.status(404).json({ error: "Missile not found" });// אם לא קיים החזר שגיאה
             return
         }
 
@@ -66,29 +66,29 @@ export const buyMissile = async (req: Request, res: Response): Promise<void> => 
             return
         }
 
-        const organization = await Organization.findOne({ name: user.organization });
+        const organization = await Organization.findOne({ name: user.organization }); // מצא את הארגון של המשתמש לפי ההשתייכות שלו
 
         if (!organization) {
-            res.status(404).json({ error: "Organization not found" });
+            res.status(404).json({ error: "Organization not found" }); // אם לא קיים כזה ארגון החזר שגיאה
             return
         }
 
-        const resources = organization.resources;
+        const resources = organization.resources; // חלץ את המערך של הנשקים של הארגון
 
-        const isMissileExistsAtOraganization = resources.find(resource => resource.name === name)
+        const isMissileExistsAtOraganization = resources.find(resource => resource.name === name) // בדוק האם הנשק כבר קיים בארגון
 
         if (isMissileExistsAtOraganization) {
-            resources.map(resource => resource.name === name ? resource.amount += Number(amount) : resource);
+            resources.map(resource => resource.name === name ? resource.amount += Number(amount) : resource);// אם קיים הוסף לכמות הנשקים של הארגון
         }
         else {
-            resources.push({ name, amount });
+            resources.push({ name, amount });// אחרת הוסף את הנשק למערך
         }
 
-        organization.resources = resources;
-        await organization.save();
+        organization.resources = resources; // עדכון את המערך של הארגון למערך החדש הכולל את הנשק החדש
+        await organization.save(); //שמור את הנתונים החדשים
 
-        user.budget -= missile.price * amount;
-        await user.save();
+        user.budget -= missile.price * amount; // עדכון את הארנק של המשתמש
+        await user.save(); //שמור את הנתונים החדשים של המשתמש
 
         res.status(200).json(user);
         return
