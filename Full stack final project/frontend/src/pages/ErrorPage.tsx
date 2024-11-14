@@ -6,7 +6,7 @@ const ErrorPage = ( ) => {
         <div>
             <h1>Error 404</h1>
             <h2>Page not found</h2>
-            <button onClick={() => { navigate('/') }}>Home</button>
+            <button onClick={() => { navigate('/login') }}>Home</button>
         </div>
     )
 }
