@@ -35,8 +35,8 @@ const Register = () => {
 
     try {
       axios.post("http://localhost:3300/auth/register", user);
-      showSnackbar('User added successfully!!');
 
+      showSnackbar('User added successfully!!');
       setTimeout(() => {
         hideSnackbar();
         navigat('/register');
@@ -45,6 +45,12 @@ const Register = () => {
 
     catch (err) {
       console.log(err);
+
+      showSnackbar('Error!!');
+      setTimeout(() => {
+        hideSnackbar();
+        navigat('/register');
+      }, 2000);
     }
   }
 
