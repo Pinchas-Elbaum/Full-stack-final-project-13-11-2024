@@ -86,7 +86,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             sameSite: 'strict'
         });
 
-        res.json({ message: "Login successful", token });
+        res.json({ name: user.name, organization: user.organization , massg: " logged in successfully"});
         return
 
     } catch (error) {

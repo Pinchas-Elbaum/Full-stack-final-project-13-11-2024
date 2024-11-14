@@ -34,8 +34,6 @@ export const getOrganizationMissiles = async (req: Request, res: Response): Prom
     }
 };
 
-
-
 export const buyMissile = async (req: Request, res: Response): Promise<void> => {
 
     try {

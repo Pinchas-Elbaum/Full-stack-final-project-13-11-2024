@@ -5,13 +5,19 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 
 import SnakeBarProvider from './providers/SnakeBarProvider.tsx'
+import UserProvider from './providers/UserProvider.tsx'
+import OrganizationProvider from './providers/OrganizationProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  
+
   <StrictMode>
     <BrowserRouter>
       <SnakeBarProvider>
-        <App />
+        <UserProvider>
+          <OrganizationProvider>
+            <App />
+          </OrganizationProvider>
+        </UserProvider>
       </SnakeBarProvider>
     </BrowserRouter>
   </StrictMode>,

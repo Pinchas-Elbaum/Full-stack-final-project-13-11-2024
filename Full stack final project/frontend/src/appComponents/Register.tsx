@@ -65,7 +65,7 @@ const Register = () => {
         <label htmlFor="name">Name</label>
         <input type="text" id="name" ref={nameRef} />
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" ref={passwordRef} />
+        <input type="password" id="password" ref={passwordRef}  required/>
 
         <label htmlFor="organization">Organization</label>
         <select id="organization" ref={organizationRef}>

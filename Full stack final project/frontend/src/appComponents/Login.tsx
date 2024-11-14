@@ -9,7 +9,7 @@ import { IUserLogin } from '../types/Types';
 
 const Login = () => {
 
-    const { setuser } = useContext(UserContext);
+    const {user, setuser } = useContext(UserContext);
     const { message, isOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext)!
 
     const nameRef = useRef<HTMLInputElement>(null);
@@ -30,7 +30,7 @@ const Login = () => {
 
         axios.post("http://localhost:3300/auth/login", userLogin)
             .then((res) => {
-                setuser(res.data);
+                setuser({name :res.data.name , organization: res.data.organization});
                 showSnackbar('User logged in successfully!!');
                 setTimeout(() => {
                     hideSnackbar();
@@ -48,7 +48,7 @@ const Login = () => {
 
     return (
         <div>
-
+            <h2>{"Welcome " + user.name}</h2>
             <form onSubmit={submitHeandler}>
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" ref={nameRef} required />
