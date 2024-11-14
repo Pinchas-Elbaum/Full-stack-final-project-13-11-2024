@@ -3,5 +3,4 @@ export interface IUser {
   password: string;
   organization: string;
   area?: string;
-  budget: number
 }
