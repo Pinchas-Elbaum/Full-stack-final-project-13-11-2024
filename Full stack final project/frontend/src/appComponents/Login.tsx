@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../providers/UserProvider';
 import { SnackbarContext } from '../providers/SnakeBarProvider';
 import axios from 'axios';
+import { IUserLogin } from '../types/Types';
 
-interface IUserLogin{
-    name: string;
-    password: string;
-}
+
 
 const Login = () => {
 
